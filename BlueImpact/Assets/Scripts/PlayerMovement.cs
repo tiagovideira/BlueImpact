@@ -7,7 +7,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float dashDistance;
     private float lastTapTime = 0;
-    private float dashTime = 0.5f;
+    [SerializeField]
+    private float dashTime = 0.2f;//Intervalo ao pressionar tecla
+    private float dashDelta;
+    [SerializeField]
     private float dashCooldown;
     public Rigidbody2D rb2d;
     private Vector3 moveDirection;
@@ -32,9 +35,9 @@ public class PlayerMovement : MonoBehaviour
 
 
         // Programação Dash
-        dashCooldown += Time.deltaTime;
+        dashDelta += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.D) && dashCooldown >= 1)
+        if (Input.GetKeyDown(KeyCode.D) && dashDelta >= dashCooldown)
         {
 
             if (Input.GetKeyDown(KeyCode.D) && (Time.time - lastTapTime) < dashTime)
@@ -45,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
             lastTapTime = Time.time;
 
         }
-        if (Input.GetKeyDown(KeyCode.A) && dashCooldown >= 1)
+        if (Input.GetKeyDown(KeyCode.A) && dashDelta >= dashCooldown)
         {
 
             if (Input.GetKeyDown(KeyCode.A) && (Time.time - lastTapTime) < dashTime)
@@ -83,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb2d.MovePosition(transform.position + new Vector3(-1, 0) * dashDistance);
         }
-        dashCooldown = 0;
+        dashDelta = 0;
     }
 
     private void Flip()
