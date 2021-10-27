@@ -268,7 +268,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 67
     mosaicPosition: {x: 0, y: 0}
   - name: wall front
@@ -289,7 +289,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 27
     mosaicPosition: {x: 0, y: 0}
   - name: split
@@ -310,7 +310,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: 3
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 91
     mosaicPosition: {x: 0, y: 0}
   - name: vertical grid
