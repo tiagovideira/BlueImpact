@@ -14,62 +14,107 @@ public class PlayerAttack : MonoBehaviour
 
     public float AttackDelta = 0;
     public float ComboDeltaTime;
-    public bool InCombo = false;
+    public string Combo;
+    public int ComboCounter;
     void Update()
     {
         AttackDelta += Time.deltaTime;
 
         if (AttackDelta > ComboDeltaTime)
         {
-            InCombo = false;
+            ComboCounter = 0;
         }
 
-        if (Input.GetMouseButtonDown(0))//Punch
+        if (Input.GetMouseButtonDown(0) && ComboCounter == 0)//Punch
         {
-            Invoke("Punch", PunchDelay);
-            Debug.Log("Punch");
-            InCombo = true;
+            Invoke("Attack", PunchDelay);
+            Combo = "P";
+            Debug.Log(Combo);
 
-            if (Input.GetMouseButtonDown(0) && AttackDelta <= ComboDeltaTime)//Punch Punch
+            if (Input.GetMouseButtonDown(0) && AttackDelta <= ComboDeltaTime && Combo == "P" && ComboCounter == 1)//Punch Punch
             {
-                Invoke("Punch", PunchDelay);
-                Debug.Log("Punch Punch");
+                Combo = "PP";
+                Invoke("Attack", PunchDelay);
+                Debug.Log(Combo);
 
-                if (Input.GetMouseButtonDown(0) && AttackDelta <= ComboDeltaTime)//Punch Punch Punch
+                if (Input.GetMouseButtonDown(0) && AttackDelta <= ComboDeltaTime && Combo == "PP" && ComboCounter == 2)//Punch Punch Punch
                 {
                     //QuickAttack
-                    Debug.Log("QuickAttack");
-                    if (Input.GetMouseButtonDown(1) && AttackDelta <= ComboDeltaTime)//Punch Punch Punch Kick
+                    Combo = "PPP";
+                    Invoke("Attack", PunchDelay);
+                    Debug.Log(Combo);
+
+                    if (Input.GetMouseButtonDown(1) && AttackDelta <= ComboDeltaTime && Combo == "PPP" && ComboCounter == 3)//Punch Punch Punch Kick
                     {
                         //Special Combo 3
-                        Debug.Log("Combo 3");
+                        Combo = "PPPK";
+                        Invoke("Attack", PunchDelay);
+                        Debug.Log(Combo);
                     }
                 }
-                else if (Input.GetMouseButtonDown(1) && AttackDelta <= ComboDeltaTime)//Punch Punch Kick
+                else if (Input.GetMouseButtonDown(1) && AttackDelta <= ComboDeltaTime && Combo == "PP" && ComboCounter == 2)//Punch Punch Kick
                 {
                     //Special Combo 2
-                    Debug.Log("Combo 2");
+                    Combo = "PPK";
+                    Invoke("Attack", PunchDelay);
+                    Debug.Log(Combo);
+
                 }
 
             }
-            else if (Input.GetMouseButtonDown(1) && AttackDelta <= ComboDeltaTime)//Punch Kick
+            else if (Input.GetMouseButtonDown(1) && AttackDelta <= ComboDeltaTime && Combo == "P" && ComboCounter == 1)//Punch Kick
             {
                 //Special Combo 1
-                Debug.Log("Combo 1");
+                Combo = "PK";
+                Invoke("Attack", PunchDelay);
+                Debug.Log(Combo);
             }
 
         }
 
-        if (Input.GetMouseButtonDown(1))//Pontapé básico
+        if (Input.GetMouseButtonDown(1) && ComboCounter == 0)//Pontapé básico
         {
+            Combo = "K";
+            Invoke("Attack", PunchDelay);
+            Debug.Log(Combo);
             Invoke("Kick", KickDelay);
-            InCombo = true;
+        }
+    }
+
+    private void Attack()
+    {
+        switch (Combo)
+        {
+            case "P":
+            ComboCounter = 1;
+                Punch();
+                break;
+            case "K":
+            ComboCounter = 1;
+                Kick();
+                break;
+            case "PP":
+            ComboCounter = 2;
+                break;
+            case "PK":
+            ComboCounter = 2;
+                break;
+            case "PPP":
+            ComboCounter = 3;
+                break;
+            case "PPK":
+            ComboCounter = 3;
+                break;
+            case "PPPK":
+            ComboCounter = 4;
+                break;
         }
     }
 
     private void Punch()
     {
         AttackDelta = 0;
+
         foreach (GameObject Enemy in PunchRange.EnemyList)
         {
             Enemy.GetComponent<EnemyHealth>().TakeDamage(PunchDamage);
