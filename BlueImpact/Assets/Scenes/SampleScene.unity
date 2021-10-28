@@ -1409,6 +1409,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4
+  dashDistance: 2
+  dashTime: 0.2
+  dashCooldown: 0.5
   rb2d: {fileID: 2058031137}
   moveX: 0
   moveY: 0
@@ -1447,8 +1450,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PunchDamage: 2
   KickDamage: 5
+  PunchDelay: 0.1
+  KickDelay: 0.2
   PunchRange: {fileID: 1429909335}
   KickRange: {fileID: 2010746097}
+  AttackDelta: 0
+  ComboDeltaTime: 3
+  InCombo: 0
 --- !u!4 &2058031139 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2133215013877138471, guid: d9de2a8f771198e45a759099b53d2478, type: 3}
