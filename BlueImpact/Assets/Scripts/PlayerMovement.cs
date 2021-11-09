@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float moveSpeed;
+
+    [SerializeField]
+    private Vector2 inputVector;
+    private PlayerInputActions playerInputActions;
     [SerializeField]
     private float dashDistance;
     private float lastTapTime = 0;
@@ -13,85 +18,81 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float dashCooldown;
     public Rigidbody2D rb2d;
-    private Vector3 moveDirection;
-    public float moveX;
-    public float moveY;
+
     private bool facingRight;
 
     void Start()
     {
         lastTapTime = 0;
     }
+    private void Awake()
+    {
+        playerInputActions = new PlayerInputActions();
+        playerInputActions.Enable();
+        playerInputActions.Player.Movement.performed += Movement_performed;
+    }
+
+    private void Movement_performed(InputAction.CallbackContext context)
+    {
+        // Debug.Log(context);
+        // context.ReadValue<Vector2>();
+        // inputVector = context.ReadValue<Vector2>();
+
+    }
 
     void FixedUpdate()
     {
-        Movement();
+        inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+        rb2d.velocity = new Vector2(inputVector.x * moveSpeed, inputVector.y * moveSpeed);
     }
 
     void Update()
     {
-        GetInput();
         Flip();
 
-
         // Programação Dash
-        dashDelta += Time.deltaTime;
+        // dashDelta += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.D) && dashDelta >= dashCooldown)
-        {
+        // if (Input.GetKeyDown(KeyCode.D) && dashDelta >= dashCooldown)
+        // {
 
-            if (Input.GetKeyDown(KeyCode.D) && (Time.time - lastTapTime) < dashTime)
-            {
-                Dash("Right");
-            }
+        //     if (Input.GetKeyDown(KeyCode.D) && (Time.time - lastTapTime) < dashTime)
+        //     {
+        //         Dash("Right");
+        //     }
 
-            lastTapTime = Time.time;
+        //     lastTapTime = Time.time;
 
-        }
-        if (Input.GetKeyDown(KeyCode.A) && dashDelta >= dashCooldown)
-        {
+        // }
+        // if (Input.GetKeyDown(KeyCode.A) && dashDelta >= dashCooldown)
+        // {
 
-            if (Input.GetKeyDown(KeyCode.A) && (Time.time - lastTapTime) < dashTime)
-            {
-                Dash("Left");
-            }
+        //     if (Input.GetKeyDown(KeyCode.A) && (Time.time - lastTapTime) < dashTime)
+        //     {
+        //         Dash("Left");
+        //     }
 
-            lastTapTime = Time.time;
+        //     lastTapTime = Time.time;
 
-        }
+        // }
+        // }
+
+        // private void Dash(string Direction)
+        // {
+        //     if (Direction == "Right")
+        //     {
+        //         rb2d.MovePosition(transform.position + new Vector3(1, 0) * dashDistance);
+        //     }
+        //     if (Direction == "Left")
+        //     {
+        //         rb2d.MovePosition(transform.position + new Vector3(-1, 0) * dashDistance);
+        //     }
+        //     dashDelta = 0;
+        // }
     }
-
-    private void GetInput()
-    {
-        moveX = Input.GetAxisRaw("Horizontal");
-        moveY = Input.GetAxisRaw("Vertical");
-
-
-        moveDirection = new Vector3(moveX, moveY).normalized;
-
-    }
-
-    private void Movement()
-    {
-        rb2d.velocity = new Vector3(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
-    }
-
-    private void Dash(string Direction)
-    {
-        if (Direction == "Right")
-        {
-            rb2d.MovePosition(transform.position + new Vector3(1, 0) * dashDistance);
-        }
-        if (Direction == "Left")
-        {
-            rb2d.MovePosition(transform.position + new Vector3(-1, 0) * dashDistance);
-        }
-        dashDelta = 0;
-    }
-
     private void Flip()
     {
-        if (moveX < 0 && !facingRight || moveX > 0 && facingRight)
+        if (inputVector.x < 0 && !facingRight || inputVector.x > 0 && facingRight)
         {
             facingRight = !facingRight;
 
@@ -100,5 +101,4 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = scale;
         }
     }
-
 }
