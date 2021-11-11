@@ -28,16 +28,22 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
-        playerInputActions.Enable();
-        playerInputActions.Player.Movement.performed += Movement_performed;
+        playerInputActions.Player.Movement.Enable();
+        playerInputActions.Player.Dash.Enable();
+        playerInputActions.Player.Dash.performed += Dash;
     }
 
-    private void Movement_performed(InputAction.CallbackContext context)
+    private void Dash(InputAction.CallbackContext context)
     {
-        // Debug.Log(context);
-        // context.ReadValue<Vector2>();
-        // inputVector = context.ReadValue<Vector2>();
-
+        Debug.Log("Dash");
+        if (inputVector.x == 1)
+        {
+            Dash("Right");
+        }
+        else if (inputVector.x == -1)
+        {
+            Dash("Left");
+        }
     }
 
     void FixedUpdate()
@@ -49,46 +55,18 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Flip();
-
-        // Programação Dash
-        // dashDelta += Time.deltaTime;
-
-        // if (Input.GetKeyDown(KeyCode.D) && dashDelta >= dashCooldown)
-        // {
-
-        //     if (Input.GetKeyDown(KeyCode.D) && (Time.time - lastTapTime) < dashTime)
-        //     {
-        //         Dash("Right");
-        //     }
-
-        //     lastTapTime = Time.time;
-
-        // }
-        // if (Input.GetKeyDown(KeyCode.A) && dashDelta >= dashCooldown)
-        // {
-
-        //     if (Input.GetKeyDown(KeyCode.A) && (Time.time - lastTapTime) < dashTime)
-        //     {
-        //         Dash("Left");
-        //     }
-
-        //     lastTapTime = Time.time;
-
-        // }
-        // }
-
-        // private void Dash(string Direction)
-        // {
-        //     if (Direction == "Right")
-        //     {
-        //         rb2d.MovePosition(transform.position + new Vector3(1, 0) * dashDistance);
-        //     }
-        //     if (Direction == "Left")
-        //     {
-        //         rb2d.MovePosition(transform.position + new Vector3(-1, 0) * dashDistance);
-        //     }
-        //     dashDelta = 0;
-        // }
+    }
+    private void Dash(string Direction)
+    {
+        if (Direction == "Right")
+        {
+            rb2d.MovePosition(transform.position + new Vector3(1, 0) * dashDistance);
+        }
+        if (Direction == "Left")
+        {
+            rb2d.MovePosition(transform.position + new Vector3(-1, 0) * dashDistance);
+        }
+        // dashDelta = 0;
     }
     private void Flip()
     {
