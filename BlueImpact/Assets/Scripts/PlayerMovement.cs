@@ -27,10 +27,10 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Awake()
     {
-        playerInputActions = new PlayerInputActions();
+        playerInputActions = new PlayerInputcAtions();
         playerInputActions.Player.Movement.Enable();
-        playerInputActions.Player.Dash.Enable();
         playerInputActions.Player.Dash.performed += Dash;
+        playerInputActions.Player.Dash.Enable();
     }
 
     private void Dash(InputAction.CallbackContext context)
