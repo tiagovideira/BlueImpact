@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -12,22 +13,19 @@ public class PlayerAttack : MonoBehaviour
     public EnemyDetection PunchRange;
     public EnemyDetection KickRange;
 
-    void Update()
+    private PlayerInputActions playerInputActions;
+
+    private void Awake()
     {
-        if (Input.GetMouseButtonDown(0))//Punch
-        {
-            Invoke("Punch", PunchDelay);
-
-        }
-
-        if (Input.GetMouseButtonDown(1))//Pontapé básico
-        {
-            Invoke("Kick", KickDelay);
-        }
+        playerInputActions = new PlayerInputActions();
+        playerInputActions.Player.Punch.performed += Punch;
+        playerInputActions.Player.Kick.performed += Kick;
+        playerInputActions.Player.Punch.Enable();
+        playerInputActions.Player.Kick.Enable();
     }
-
-    private void Punch()
+    private void Punch(InputAction.CallbackContext context)
     {
+
         Debug.Log("Punch");
 
         foreach (GameObject Enemy in PunchRange.EnemyList)
@@ -36,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void Kick()
+    private void Kick(InputAction.CallbackContext context)
     {
         Debug.Log("Kick");
         foreach (GameObject Enemy in KickRange.EnemyList)

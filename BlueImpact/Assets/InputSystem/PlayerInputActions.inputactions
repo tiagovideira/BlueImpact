@@ -22,12 +22,20 @@
                     "interactions": "Hold"
                 },
                 {
-                    "name": "Attack",
+                    "name": "Punch",
                     "type": "Button",
                     "id": "a9747746-5693-4baf-b18e-056ad638f4f5",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold"
+                    "interactions": ""
+                },
+                {
+                    "name": "Kick",
+                    "type": "Button",
+                    "id": "bb7342ea-a1ff-45c2-be1b-ed7bb6e348ae",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -165,23 +173,12 @@
                 },
                 {
                     "name": "",
-                    "id": "7dbc4d38-6c4a-4c61-8ce6-00c6ee17674a",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b3ca92b7-2723-465f-82b5-349c33c7252b",
                     "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Attack",
+                    "action": "Punch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -192,7 +189,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Attack",
+                    "action": "Punch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -203,7 +200,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Attack",
+                    "action": "Punch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "703274c0-d0f3-4073-9fb1-ede28909abd6",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Kick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

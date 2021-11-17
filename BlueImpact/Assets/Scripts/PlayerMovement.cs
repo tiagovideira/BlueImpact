@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     {
         lastTapTime = 0;
     }
+    
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
