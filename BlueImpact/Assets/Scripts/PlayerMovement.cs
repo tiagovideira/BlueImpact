@@ -1,10 +1,15 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float moveSpeed;
+    private bool canMove = true;
+    private bool canDash = true;
+
+    private string dashDirection;
 
     [SerializeField]
     private Vector2 inputVector;
@@ -12,9 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float dashDistance;
     private float lastTapTime = 0;
-    [SerializeField]
-    private float dashTime = 0.2f;//Intervalo ao pressionar tecla
-    private float dashDelta;
+
     [SerializeField]
     private float dashCooldown;
     public Rigidbody2D rb2d;
@@ -25,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         lastTapTime = 0;
     }
-    
+
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
@@ -36,39 +39,54 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dash(InputAction.CallbackContext context)
     {
-        Debug.Log("Dash");
         if (inputVector.x == 1)
         {
-            Dash("Right");
+            dashDirection = "Right";
         }
-        else if (inputVector.x == -1)
+        if (inputVector.x == -1)
         {
-            Dash("Left");
+            dashDirection = "Left";
+        }
+        if (canDash)
+        {
+            StartCoroutine("ExecuteDash");
         }
     }
 
     void FixedUpdate()
     {
         inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
-        rb2d.velocity = new Vector2(inputVector.x * moveSpeed, inputVector.y * moveSpeed);
+        if (canMove)
+        {
+            rb2d.velocity = new Vector2(inputVector.x * moveSpeed, inputVector.y * moveSpeed);
+        }
     }
 
     void Update()
     {
         Flip();
     }
-    private void Dash(string Direction)
+    private IEnumerator ExecuteDash()
     {
-        if (Direction == "Right")
+        Debug.Log("1");
+        canMove = false;
+        canDash = false;
+        if (dashDirection == "Right")
         {
             rb2d.MovePosition(transform.position + new Vector3(1, 0) * dashDistance);
         }
-        if (Direction == "Left")
+        if (dashDirection == "Left")
         {
             rb2d.MovePosition(transform.position + new Vector3(-1, 0) * dashDistance);
         }
-        // dashDelta = 0;
+        canMove = true;
+
+        yield return new WaitForSeconds(dashCooldown);
+
+        Debug.Log("2");
+        canDash = true;
     }
+
     private void Flip()
     {
         if (inputVector.x < 0 && !facingRight || inputVector.x > 0 && facingRight)
