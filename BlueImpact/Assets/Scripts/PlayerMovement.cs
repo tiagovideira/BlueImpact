@@ -16,18 +16,14 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputActions playerInputActions;
     [SerializeField]
     private float dashDistance;
-    private float lastTapTime = 0;
 
     [SerializeField]
     private float dashCooldown;
+    [SerializeField]
+    private float dashTime;
     public Rigidbody2D rb2d;
 
     private bool facingRight;
-
-    void Start()
-    {
-        lastTapTime = 0;
-    }
 
     private void Awake()
     {
@@ -39,14 +35,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dash(InputAction.CallbackContext context)
     {
-        if (inputVector.x == 1)
-        {
-            dashDirection = "Right";
-        }
-        if (inputVector.x == -1)
-        {
-            dashDirection = "Left";
-        }
         if (canDash)
         {
             StartCoroutine("ExecuteDash");
@@ -68,22 +56,17 @@ public class PlayerMovement : MonoBehaviour
     }
     private IEnumerator ExecuteDash()
     {
-        Debug.Log("1");
         canMove = false;
         canDash = false;
-        if (dashDirection == "Right")
-        {
-            rb2d.MovePosition(transform.position + new Vector3(1, 0) * dashDistance);
-        }
-        if (dashDirection == "Left")
-        {
-            rb2d.MovePosition(transform.position + new Vector3(-1, 0) * dashDistance);
-        }
+
+        rb2d.AddForce(new Vector2(inputVector.x * dashDistance, inputVector.y * dashDistance), ForceMode2D.Impulse); 
+        //rb2d.MovePosition(transform.position + new Vector3(inputVector.x, 0) * dashDistance);
+        yield return new WaitForSeconds(dashTime);
+        
         canMove = true;
 
-        yield return new WaitForSeconds(dashCooldown);
+        yield return new WaitForSeconds(dashCooldown - dashTime);
 
-        Debug.Log("2");
         canDash = true;
     }
 
