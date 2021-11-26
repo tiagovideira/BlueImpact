@@ -7,6 +7,8 @@ TagManager:
   - PlayerRange
   - Enemy
   - Door
+  - EnemyRange
+  - PlayerHitBox
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Enemy
   - PlayerRange
   - Door
-  - 
+  - PlayerHitBox
   - 
   - 
   - 

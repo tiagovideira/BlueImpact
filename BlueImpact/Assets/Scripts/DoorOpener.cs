@@ -8,6 +8,8 @@ public class DoorOpener : MonoBehaviour
     private int doorHits = 0;
     [SerializeField]
     public EnemyDetection KickRange;
+    [SerializeField]
+    private GameObject DoorTrigger;
     public void OpenDoor()
     {
         foreach (GameObject Door in KickRange.DoorList)
@@ -15,6 +17,7 @@ public class DoorOpener : MonoBehaviour
             doorHits++;
             if (doorHits >= doorHealth)
             {
+                DoorTrigger.SetActive(false);
                 transform.parent.gameObject.SetActive(false);
             }
         }

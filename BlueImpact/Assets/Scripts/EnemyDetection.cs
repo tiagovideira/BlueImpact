@@ -17,8 +17,6 @@ public class EnemyDetection : MonoBehaviour
         {
             DoorList.Add(other.gameObject);
             Debug.Log("Door enter");
-
-
         }
     }
 

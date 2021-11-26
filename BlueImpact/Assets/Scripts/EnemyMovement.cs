@@ -7,52 +7,96 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     private Transform PlayerTransform;
     private Rigidbody2D rb2d;
+
     private Vector2 direction;
     [SerializeField]
     private float moveSpeed;
-    [SerializeField]
+
     private float playerOffsetX;
-    [SerializeField]
     private float playerOffsetY;
+
     private bool playerToTheLeft;
+
+    public bool MustFollowPlayer;
+    [SerializeField]
+    private float TimeFollowing;
+    [SerializeField]
+    private float TimeBetweenFollows;
+
+    private float playerX;
+    private float playerY;
+
+    [SerializeField]
+    private PlayerDetection playerDetection;
+
+    void Awake()
+    {
+        StartCoroutine("FollowPlayer");
+    }
 
     private void Start()
     {
         rb2d = this.GetComponent<Rigidbody2D>();
+        MustFollowPlayer = true;
     }
 
     private void Update()
     {
-        direction = PlayerTransform.position - transform.position;
-        FlipSprite();
+        FlipEnemy();
     }
 
     private void FixedUpdate()
     {
-        rb2d.velocity = new Vector2(direction.x * moveSpeed, direction.y * moveSpeed);
-
-        if (playerToTheLeft)
+        if (MustFollowPlayer && playerDetection.PlayerInAttackRange == false)
         {
-            transform.position += new Vector3(-playerOffsetX, -playerOffsetY);
+            rb2d.velocity = new Vector2(direction.x * moveSpeed, direction.y * moveSpeed);
         }
         else
         {
-            transform.position += new Vector3(playerOffsetX, -playerOffsetY);//
+            rb2d.velocity = new Vector2(0, 0);
         }
+
     }
 
-    private void FlipSprite()
+    private void FlipEnemy()
     {
         if (PlayerTransform.position.x <= this.transform.position.x)
         {
-            transform.localScale = new Vector2(-1, 1);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
             playerToTheLeft = false;
         }
         else
         {
-            transform.localScale = new Vector2(1, 1);
+            transform.rotation = Quaternion.Euler(0, 180, 0);
             playerToTheLeft = true;
         }
+    }
+
+    private void GetPlayerPosition()
+    {
+        direction = (PlayerTransform.position - new Vector3(playerOffsetX, playerOffsetY, 0)) - transform.position;
+        playerX = PlayerTransform.position.x;
+        playerY = PlayerTransform.position.y;
+        direction.Normalize();
+    }
+
+    public IEnumerator FollowPlayer()
+    {
+        while (true)
+        {
+            GetPlayerPosition();
+            MustFollowPlayer = true;
+            yield return new WaitForSeconds(TimeFollowing);
+
+            MustFollowPlayer = false;
+            yield return new WaitForSeconds(TimeBetweenFollows);
+        }
+    }
+
+    public void DisableMovement()
+    {
+            rb2d.velocity = new Vector2(0, 0);
+            this.enabled = false;
     }
 
 }
