@@ -60,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
         canDash = false;
 
         rb2d.AddForce(new Vector2(inputVector.x * dashDistance, inputVector.y * dashDistance), ForceMode2D.Impulse); 
-        //rb2d.MovePosition(transform.position + new Vector3(inputVector.x, 0) * dashDistance);
         yield return new WaitForSeconds(dashTime);
         
         canMove = true;
