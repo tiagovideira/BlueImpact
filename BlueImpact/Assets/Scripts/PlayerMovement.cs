@@ -9,11 +9,14 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
     private bool canDash = true;
 
+
     private string dashDirection;
 
     [SerializeField]
     private Vector2 inputVector;
     private PlayerInputActions playerInputActions;
+    private PlayerAttack playerAttack;
+
     [SerializeField]
     private float dashDistance;
 
@@ -25,12 +28,17 @@ public class PlayerMovement : MonoBehaviour
 
     private bool facingRight;
 
+    private Animator animator;
+
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Movement.Enable();
         playerInputActions.Player.Dash.performed += Dash;
         playerInputActions.Player.Dash.Enable();
+        animator = this.GetComponent<Animator>();
+
+        playerAttack = this.GetComponent<PlayerAttack>();
     }
 
     private void Dash(InputAction.CallbackContext context)
@@ -44,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
-        if (canMove)
+        if (canMove && playerAttack.canAttack)
         {
             rb2d.velocity = new Vector2(inputVector.x * moveSpeed, inputVector.y * moveSpeed);
         }
@@ -53,15 +61,27 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Flip();
+        if (inputVector.magnitude > 0 && canMove)
+        {
+            animator.SetBool("IsMoving", true);
+        }
+        else
+        {
+            animator.SetBool("IsMoving", false);
+        }
     }
     private IEnumerator ExecuteDash()
     {
         canMove = false;
         canDash = false;
 
-        rb2d.AddForce(new Vector2(inputVector.x * dashDistance, inputVector.y * dashDistance), ForceMode2D.Impulse); 
+        rb2d.AddForce(new Vector2(inputVector.x * dashDistance, 0), ForceMode2D.Impulse);
+        if (inputVector.x != 0)
+        {
+            animator.SetTrigger("Dash");
+        }
         yield return new WaitForSeconds(dashTime);
-        
+
         canMove = true;
 
         yield return new WaitForSeconds(dashCooldown - dashTime);

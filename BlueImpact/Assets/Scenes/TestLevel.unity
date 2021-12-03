@@ -918,7 +918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &579563858
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2747,7 +2747,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1429909331}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -3792,7 +3792,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2010746095}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -3848,11 +3848,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7860fb7cbc7634847a618d84f17e73cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 5
   inputVector: {x: 0, y: 0}
-  dashDistance: 20
+  dashDistance: 15
   dashCooldown: 1
-  dashTime: 0.1
+  dashTime: 0.3
   rb2d: {fileID: 2058031137}
 --- !u!50 &2058031137
 Rigidbody2D:
@@ -3887,12 +3887,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616577f4f54094c45b452383383c71b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Energy: 0
+  energyIncrement: 0
   PunchDamage: 2
   KickDamage: 5
-  PunchDelay: 1
-  KickDelay: 0.2
   PunchRange: {fileID: 1429909335}
   KickRange: {fileID: 2010746097}
+  canAttack: 1
+  punchCooldown: 0.2
+  kickCooldown: 0
 --- !u!61 &2058031140
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4284,7 +4287,7 @@ Animator:
   m_GameObject: {fileID: 2133215014844337511}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 35bf156517fddaf44a4dffe71d8d55b0, type: 2}
+  m_Controller: {fileID: 9100000, guid: c4a42e3f9407b3c4faff61b64ce7c053, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
