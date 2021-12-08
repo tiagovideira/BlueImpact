@@ -74,18 +74,24 @@ public class PlayerAttack : MonoBehaviour
 
     private void Kick(InputAction.CallbackContext context)
     {
-        Debug.Log("Kick");
-        foreach (GameObject Enemy in KickRange.EnemyList)
+        if (canAttack)
         {
-            Enemy.GetComponent<EnemyHealth>().TakeDamage(KickDamage);
+            StartCoroutine("KickCooldownStart");
+            Debug.Log("Kick");
+            animator.SetTrigger("Kick");
 
-            if (Energy + energyIncrement > 100)
+            foreach (GameObject Enemy in KickRange.EnemyList)
             {
-                Energy = 100;
-            }
-            else
-            {
-                Energy += energyIncrement;
+                Enemy.GetComponent<EnemyHealth>().TakeDamage(KickDamage);
+
+                if (Energy + energyIncrement > 100)
+                {
+                    Energy = 100;
+                }
+                else
+                {
+                    Energy += energyIncrement;
+                }
             }
         }
     }

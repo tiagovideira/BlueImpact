@@ -43,6 +43,15 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         FlipEnemy();
+        if (PlayerTransform.position.y < this.transform.position.y)
+        {
+            this.GetComponent<SpriteRenderer>().sortingOrder = 74;
+        }
+        else
+        {
+            this.GetComponent<SpriteRenderer>().sortingOrder = 76;
+        }
+
     }
 
     private void FixedUpdate()
@@ -86,17 +95,21 @@ public class EnemyMovement : MonoBehaviour
         {
             GetPlayerPosition();
             MustFollowPlayer = true;
+            TimeFollowing = Random.Range(1, 3);
+
             yield return new WaitForSeconds(TimeFollowing);
 
             MustFollowPlayer = false;
+            TimeFollowing = Random.Range(1, 4);
+
             yield return new WaitForSeconds(TimeBetweenFollows);
         }
     }
 
     public void DisableMovement()
     {
-            rb2d.velocity = new Vector2(0, 0);
-            this.enabled = false;
+        rb2d.velocity = new Vector2(0, 0);
+        this.enabled = false;
     }
 
 }

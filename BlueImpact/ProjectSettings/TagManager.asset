@@ -21,8 +21,8 @@ TagManager:
   - Door
   - PlayerHitBox
   - EnemyPlayerDetection
-  - 
-  - 
+  - EnemySpawnTrigger
+  - LevelEndTrigger
   - 
   - 
   - 

@@ -40,11 +40,13 @@ public class EnemyAttack : MonoBehaviour
         while (true)
         {
             Debug.Log("Começou coroutine de ataque");
+            timeBeforeAttack = Random.Range(0.5f, 3);
 
             yield return new WaitForSeconds(timeBeforeAttack);
 
             Attack();
 
+            attackCooldown = Random.Range(0.5f, 2);
             yield return new WaitForSeconds(attackCooldown);
         }
     }
