@@ -26,6 +26,8 @@ public class PlayerAttack : MonoBehaviour
     private float punchCooldown;
     [SerializeField]
     private float kickCooldown;
+    [SerializeField]
+    private SoundManager soundManager;
 
 
     private void Awake()
@@ -55,6 +57,7 @@ public class PlayerAttack : MonoBehaviour
             StartCoroutine("PunchCooldownStart");
             Debug.Log("Punch");
             animator.SetTrigger("Punch");
+            soundManager.PlaySound("Punch");
 
             foreach (GameObject Enemy in PunchRange.EnemyList)
             {
@@ -79,10 +82,12 @@ public class PlayerAttack : MonoBehaviour
             StartCoroutine("KickCooldownStart");
             Debug.Log("Kick");
             animator.SetTrigger("Kick");
+            soundManager.PlaySound("Kick");
 
             foreach (GameObject Enemy in KickRange.EnemyList)
             {
                 Enemy.GetComponent<EnemyHealth>().TakeDamage(KickDamage);
+
 
                 if (Energy + energyIncrement > 100)
                 {

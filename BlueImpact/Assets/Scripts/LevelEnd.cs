@@ -25,7 +25,7 @@ public class LevelEnd : MonoBehaviour
 
     public IEnumerator LoadMenu()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(0);
     }
 }
