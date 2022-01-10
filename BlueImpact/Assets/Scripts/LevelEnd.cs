@@ -8,10 +8,15 @@ public class LevelEnd : MonoBehaviour
 {
     [SerializeField]
     private Image endingPanel;
-    private bool endLevel = false;
+    private GameObject player;
+    [SerializeField]
+    private GameObject NextLevelStartPosition;
+
 
     [SerializeField]
     private GameObject enemies;
+    [SerializeField]
+    private int currentLevel;
     private int enemyCount;
 
     [SerializeField]
@@ -21,9 +26,15 @@ public class LevelEnd : MonoBehaviour
 
     private bool levelCanEnd;
 
+    [SerializeField]
+    private CameraBoundSwitch CameraBoundSwitchScript;
+
+    private void Start()
+    {
+        player = GameObject.Find("Player");
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //endLevel = true;
         enemyCount = enemies.transform.childCount;
 
         if (enemyCount == 0)
@@ -46,16 +57,26 @@ public class LevelEnd : MonoBehaviour
 
     private void Update()
     {
-        if (endLevel)
+        if (levelCanEnd)
         {
-            //endingPanel.color = new Color(endingPanel.color.r, endingPanel.color.g, endingPanel.color.b, endingPanel.color.a + Time.deltaTime);
+            Debug.Log("Acabou nivel");
             StartCoroutine("LoadNextLevel");
+            levelCanEnd=false;
         }
     }
 
     public IEnumerator LoadNextLevel()
     {
+        //endingPanel.color = new Color(endingPanel.color.r, endingPanel.color.g, endingPanel.color.b, endingPanel.color.a + Time.deltaTime);//Fade to black
+        endingPanel.color = new Color(endingPanel.color.r, endingPanel.color.g, endingPanel.color.b, 255);//Tela preta instantaneamente
+        player.GetComponent<PlayerMovement>().enabled = false;
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(0);
+        player.transform.position = NextLevelStartPosition.transform.position;
+        player.GetComponent<PlayerMovement>().enabled = true;
+        CameraBoundSwitchScript.ChangeCameraBound(currentLevel);
+        yield return new WaitForSeconds(1);
+        endingPanel.color = new Color(endingPanel.color.r, endingPanel.color.g, endingPanel.color.b, 0);//Fade to normal
     }
+
+
 }
