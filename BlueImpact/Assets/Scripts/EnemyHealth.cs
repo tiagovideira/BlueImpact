@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -8,6 +7,13 @@ public class EnemyHealth : MonoBehaviour
     private float health;
 
     public SpriteRenderer sprite;
+    private PowerupManager powerupManager;
+
+    //Encontra o PowerupManager correspondente ao nivel
+    private void OnEnable()
+    {
+        powerupManager = GameObject.Find("PowerupManager").GetComponent<PowerupManager>();
+    }
 
     public void TakeDamage(float DamageAmount)
     {
@@ -15,6 +21,7 @@ public class EnemyHealth : MonoBehaviour
         {
             health = 0;
             Debug.Log("Enemy Dead");
+            powerupManager.EnemyCountCheck();
             Destroy(this.gameObject);
         }
         else

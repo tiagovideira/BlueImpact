@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class LevelEnd : MonoBehaviour
 {
@@ -25,9 +24,21 @@ public class LevelEnd : MonoBehaviour
     private GameObject canEndUI;
 
     private bool levelCanEnd;
+    private bool playerOnTrigger = false;
 
     [SerializeField]
     private CameraBoundSwitch CameraBoundSwitchScript;
+
+    private PlayerInputActions playerInputActions;
+
+    private void Awake()
+    {
+        playerInputActions = new PlayerInputActions();
+        playerInputActions.Player.Action.performed += Action;
+        playerInputActions.Player.Action.Enable();
+
+    }
+
 
     private void Start()
     {
@@ -47,23 +58,26 @@ public class LevelEnd : MonoBehaviour
             levelCanEnd = false;
             cantEndUI.SetActive(true);
         }
+        playerOnTrigger = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         canEndUI.SetActive(false);
         cantEndUI.SetActive(false);
+        playerOnTrigger = false;
     }
 
-    private void Update()
+    private void Action(InputAction.CallbackContext context)
     {
-        if (levelCanEnd)
+        if (levelCanEnd && playerOnTrigger)
         {
             Debug.Log("Acabou nivel");
             StartCoroutine("LoadNextLevel");
-            levelCanEnd=false;
+            levelCanEnd = false;
         }
     }
+
 
     public IEnumerator LoadNextLevel()
     {
