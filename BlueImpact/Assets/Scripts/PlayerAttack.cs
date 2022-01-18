@@ -120,4 +120,10 @@ public class PlayerAttack : MonoBehaviour
         PunchDamage = PunchDamage * 1.10f;
         KickDamage = KickDamage * 1.10f; 
     }
+
+    public void ActivatePowerup4()//Double Damage taken (and Double Damage recieved)
+    {
+        PunchDamage = 2 * PunchDamage;
+        KickDamage = 2 * KickDamage;
+    }
 }

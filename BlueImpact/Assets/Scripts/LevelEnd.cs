@@ -31,6 +31,8 @@ public class LevelEnd : MonoBehaviour
 
     private PlayerInputActions playerInputActions;
 
+    private bool powerup6Active = false;
+
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
@@ -75,6 +77,11 @@ public class LevelEnd : MonoBehaviour
             Debug.Log("Acabou nivel");
             StartCoroutine("LoadNextLevel");
             levelCanEnd = false;
+
+            if(powerup6Active)
+            {
+                GameObject.Find("Player").GetComponent<PlayerHealth>().Heal(10);
+            }
         }
     }
 
@@ -93,4 +100,8 @@ public class LevelEnd : MonoBehaviour
     }
 
 
+    public void ActivatePowerup6()//Damage recieved down 10%
+    {
+        powerup6Active = true;
+    }
 }

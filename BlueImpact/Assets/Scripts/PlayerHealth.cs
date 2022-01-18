@@ -11,13 +11,20 @@ public class PlayerHealth : MonoBehaviour
     private float maxHealth;
 
     private bool powerup2Active = false;
+    private bool powerup4Active = false;
+
 
     public void TakeDamage(float DamageAmount)
     {
-        if(powerup2Active)
+        if(powerup4Active)
+        {
+            DamageAmount = 2 * DamageAmount;
+        }
+        if (powerup2Active)
         {
             DamageAmount = DamageAmount * 0.9f;
         }
+
         if (health - DamageAmount <= 0)
         {
             health = 0;
@@ -45,6 +52,11 @@ public class PlayerHealth : MonoBehaviour
     public void ActivatePowerup2()//Damage recieved down 10%
     {
         powerup2Active = true;
+    }
+
+    public void ActivatePowerup4()//Damage recieved down 10%
+    {
+        powerup4Active = true;
     }
 
 }

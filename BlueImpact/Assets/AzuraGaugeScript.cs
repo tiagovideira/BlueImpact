@@ -20,5 +20,6 @@ public class AzuraGaugeScript : MonoBehaviour
         CurrentEnergy = playerAttackScript.Energy;
         azuraGauge.fillAmount = CurrentEnergy / maxEnergy;
     }
+    
 
 }

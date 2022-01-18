@@ -9,6 +9,9 @@ public class Powerup6 : MonoBehaviour
     private bool playerOnTrigger = false;
 
     private GameObject powerupManager;
+    private GameObject LevelEndTrigger0;
+    private GameObject LevelEndTrigger1;
+    
     void Awake()
     {
         playerInputActions = new PlayerInputActions();
@@ -32,6 +35,12 @@ public class Powerup6 : MonoBehaviour
         if (playerOnTrigger)
         {
             //codigo do powerup   remover powerup selecionado da lista de powerups que podem calhar
+
+            LevelEndTrigger0 = GameObject.Find("LevelEndTrigger0");
+            LevelEndTrigger1 = GameObject.Find("LevelEndTrigger1");
+
+            LevelEndTrigger0.GetComponent<LevelEnd>().ActivatePowerup6();
+            LevelEndTrigger1.GetComponent<LevelEnd>().ActivatePowerup6();
             foreach (Transform child in powerupManager.transform)
             {
                 GameObject.Destroy(child.gameObject);
