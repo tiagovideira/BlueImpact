@@ -114,4 +114,10 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForSeconds(kickCooldown);
         canAttack = true;
     }
+
+    public void ActivatePowerup1()//Damage up 10%
+    {
+        PunchDamage = PunchDamage * 1.10f;
+        KickDamage = KickDamage * 1.10f; 
+    }
 }

@@ -26,6 +26,9 @@ public class PowerupManager : MonoBehaviour
     public GameObject PowerupPrefab9;
     public GameObject PowerupPrefab10;
 
+    private GameObject powerupOne;
+    private GameObject powerupTwo;
+
 
 
     public void EnemyCountCheck()
@@ -54,43 +57,43 @@ public class PowerupManager : MonoBehaviour
         {
 
             case 1:
-                Instantiate(PowerupPrefab1, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab1, spawnPoint1.position, Quaternion.identity);
                 break;
 
             case 2:
-                Instantiate(PowerupPrefab2, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab2, spawnPoint1.position, Quaternion.identity);
                 break;
 
             case 3:
-                Instantiate(PowerupPrefab3, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab3, spawnPoint1.position, Quaternion.identity);
                 break;
 
             case 4:
-                Instantiate(PowerupPrefab4, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab4, spawnPoint1.position, Quaternion.identity);
                 break;
 
             case 5:
-                Instantiate(PowerupPrefab5, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab5, spawnPoint1.position, Quaternion.identity);
                 break;
 
             case 6:
-                Instantiate(PowerupPrefab6, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab6, spawnPoint1.position, Quaternion.identity);
                 break;
 
             case 7:
-                Instantiate(PowerupPrefab7, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab7, spawnPoint1.position, Quaternion.identity);
                 break;
 
             case 8:
-                Instantiate(PowerupPrefab8, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab8, spawnPoint1.position, Quaternion.identity);
                 break;
 
             case 9:
-                Instantiate(PowerupPrefab9, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab9, spawnPoint1.position, Quaternion.identity);
                 break;
 
             case 10:
-                Instantiate(PowerupPrefab10, spawnPoint1.position, Quaternion.identity);
+                powerupOne = Instantiate(PowerupPrefab10, spawnPoint1.position, Quaternion.identity);
                 break;
 
         }
@@ -99,46 +102,47 @@ public class PowerupManager : MonoBehaviour
         {
 
             case 1:
-                Instantiate(PowerupPrefab1, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab1, spawnPoint2.position, Quaternion.identity);
                 break;
 
             case 2:
-                Instantiate(PowerupPrefab2, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab2, spawnPoint2.position, Quaternion.identity);
                 break;
 
             case 3:
-                Instantiate(PowerupPrefab3, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab3, spawnPoint2.position, Quaternion.identity);
                 break;
 
             case 4:
-                Instantiate(PowerupPrefab4, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab4, spawnPoint2.position, Quaternion.identity);
                 break;
 
             case 5:
-                Instantiate(PowerupPrefab5, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab5, spawnPoint2.position, Quaternion.identity);
                 break;
 
             case 6:
-                Instantiate(PowerupPrefab6, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab6, spawnPoint2.position, Quaternion.identity);
                 break;
 
             case 7:
-                Instantiate(PowerupPrefab7, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab7, spawnPoint2.position, Quaternion.identity);
                 break;
 
             case 8:
-                Instantiate(PowerupPrefab8, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab8, spawnPoint2.position, Quaternion.identity);
                 break;
 
             case 9:
-                Instantiate(PowerupPrefab9, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab9, spawnPoint2.position, Quaternion.identity);
                 break;
 
             case 10:
-                Instantiate(PowerupPrefab10, spawnPoint2.position, Quaternion.identity);
+                powerupTwo = Instantiate(PowerupPrefab10, spawnPoint2.position, Quaternion.identity);
                 break;
-
         }
+        powerupOne.transform.SetParent(this.transform);
+        powerupTwo.transform.SetParent(this.transform);
 
     }
 }

@@ -100,4 +100,9 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = scale;
         }
     }
+
+    public void ActivatePowerup3()//MoveSpeed up 15%
+    {
+        moveSpeed = moveSpeed * 1.15f;
+    }
 }

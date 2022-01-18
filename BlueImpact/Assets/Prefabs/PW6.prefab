@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3983987723093099371}
   - component: {fileID: 8841330824083605968}
   - component: {fileID: -6824269834161643383}
-  - component: {fileID: 6327603825739634500}
+  - component: {fileID: 8287228339301440412}
   m_Layer: 0
   m_Name: PW6
   m_TagString: Untagged
@@ -101,7 +101,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.013273239, y: -0.45588207}
   m_Size: {x: 4.137417, y: 4.8041286}
   m_Direction: 0
---- !u!114 &6327603825739634500
+--- !u!114 &8287228339301440412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8524632216652935509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcd30848db6a1104c84eb8a35a4edd1e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a51ee2630fd90342a4995d961dbe1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &9168153120962881063

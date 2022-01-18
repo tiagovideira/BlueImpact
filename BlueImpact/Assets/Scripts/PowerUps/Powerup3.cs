@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Powerup1 : MonoBehaviour
+public class Powerup3 : MonoBehaviour
 {
-    private PlayerInputActions playerInputActions;
+ private PlayerInputActions playerInputActions;
     private bool playerOnTrigger = false;
 
     private GameObject powerupManager;
@@ -31,9 +31,9 @@ public class Powerup1 : MonoBehaviour
     {
         if (playerOnTrigger)
         {
-            // FALTA remover powerup selecionado da lista de powerups que podem calhar
+            //FALTA remover powerup selecionado da lista de powerups que podem calhar
 
-            GameObject.Find("Player").GetComponent<PlayerAttack>().ActivatePowerup1();
+            GameObject.Find("Player").GetComponent<PlayerMovement>().ActivatePowerup3();
 
             foreach (Transform child in powerupManager.transform)
             {
@@ -42,5 +42,6 @@ public class Powerup1 : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 
 }

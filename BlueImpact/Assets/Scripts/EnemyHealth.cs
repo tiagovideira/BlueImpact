@@ -21,7 +21,7 @@ public class EnemyHealth : MonoBehaviour
         {
             health = 0;
             Debug.Log("Enemy Dead");
-            powerupManager.EnemyCountCheck();
+            powerupManager.EnemyCountCheck();//Checks if can spawn powerup
             Destroy(this.gameObject);
         }
         else
