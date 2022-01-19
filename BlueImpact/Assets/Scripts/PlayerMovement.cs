@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
+    [SerializeField]
+    private SoundManager soundManager;
+
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
@@ -74,6 +77,9 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = false;
         canDash = false;
+
+        soundManager.PlaySound("Dash");
+
 
         rb2d.AddForce(new Vector2(inputVector.x * dashDistance, 0), ForceMode2D.Impulse);
         if (inputVector.x != 0)

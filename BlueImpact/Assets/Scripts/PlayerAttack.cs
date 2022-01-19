@@ -11,7 +11,10 @@ public class PlayerAttack : MonoBehaviour
     private float energyIncrement;
 
     public float PunchDamage;
+    private float realPunchDamage;
+
     public float KickDamage;
+    private float realKickDamage;
 
     public EnemyDetection PunchRange;
     public EnemyDetection KickRange;
@@ -28,6 +31,8 @@ public class PlayerAttack : MonoBehaviour
     private float kickCooldown;
     [SerializeField]
     private SoundManager soundManager;
+
+    private bool powerup10 = false;
 
 
     private void Awake()
@@ -55,22 +60,39 @@ public class PlayerAttack : MonoBehaviour
         if (canAttack)
         {
             StartCoroutine("PunchCooldownStart");
-            Debug.Log("Punch");
             animator.SetTrigger("Punch");
-            soundManager.PlaySound("Punch");
-
-            foreach (GameObject Enemy in PunchRange.EnemyList)
+            if (PunchRange.EnemyList.Count > 0)
             {
-                Enemy.GetComponent<EnemyHealth>().TakeDamage(PunchDamage);
+                soundManager.PlaySound("Punch");
 
-                if (Energy + energyIncrement > 100)
+                foreach (GameObject Enemy in PunchRange.EnemyList)
                 {
-                    Energy = 100;
+                    realPunchDamage = PunchDamage;
+                    if (powerup10)//Powerup10 Ativo
+                    {
+                        int probability = Random.Range(1, 100);
+                        if (probability <= 15)//15% chance de critico
+                        {
+                            realPunchDamage = PunchDamage * 1.5f;
+                        }
+
+                    }
+                    Enemy.GetComponent<EnemyHealth>().TakeDamage(realPunchDamage);//Normal hit
+
+
+                    if (Energy + energyIncrement > 100)
+                    {
+                        Energy = 100;
+                    }
+                    else
+                    {
+                        Energy += energyIncrement;
+                    }
                 }
-                else
-                {
-                    Energy += energyIncrement;
-                }
+            }
+            else
+            {
+                soundManager.PlaySound("PunchMiss");
             }
         }
     }
@@ -80,23 +102,38 @@ public class PlayerAttack : MonoBehaviour
         if (canAttack)
         {
             StartCoroutine("KickCooldownStart");
-            Debug.Log("Kick");
             animator.SetTrigger("Kick");
-            soundManager.PlaySound("Kick");
-
-            foreach (GameObject Enemy in KickRange.EnemyList)
+            if (KickRange.EnemyList.Count > 0)
             {
-                Enemy.GetComponent<EnemyHealth>().TakeDamage(KickDamage);
+                soundManager.PlaySound("Kick");
+                
+                foreach (GameObject Enemy in KickRange.EnemyList)
+                {
+                    realKickDamage = KickDamage;
+                    if (powerup10)
+                    {
+                        int probability = Random.Range(1, 100);
+                        if (probability <= 15)//15% chance de critico
+                        {
+                            realKickDamage = KickDamage * 1.5f;
+                        }
+                    }
+                    Enemy.GetComponent<EnemyHealth>().TakeDamage(realKickDamage);
 
 
-                if (Energy + energyIncrement > 100)
-                {
-                    Energy = 100;
+                    if (Energy + energyIncrement > 100)
+                    {
+                        Energy = 100;
+                    }
+                    else
+                    {
+                        Energy += energyIncrement;
+                    }
                 }
-                else
-                {
-                    Energy += energyIncrement;
-                }
+            }
+            else
+            {
+                soundManager.PlaySound("KickMiss");
             }
         }
     }
@@ -118,12 +155,17 @@ public class PlayerAttack : MonoBehaviour
     public void ActivatePowerup1()//Damage up 10%
     {
         PunchDamage = PunchDamage * 1.10f;
-        KickDamage = KickDamage * 1.10f; 
+        KickDamage = KickDamage * 1.10f;
     }
 
     public void ActivatePowerup4()//Double Damage taken (and Double Damage recieved)
     {
         PunchDamage = 2 * PunchDamage;
         KickDamage = 2 * KickDamage;
+    }
+
+    public void ActivatePowerup10()//Double Damage taken (and Double Damage recieved)
+    {
+        powerup10 = true;
     }
 }

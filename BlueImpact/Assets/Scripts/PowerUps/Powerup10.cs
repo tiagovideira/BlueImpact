@@ -32,6 +32,8 @@ public class Powerup10 : MonoBehaviour
         if (playerOnTrigger)
         {
             //codigo do powerup   remover powerup selecionado da lista de powerups que podem calhar
+            GameObject.Find("Player").GetComponent<PlayerAttack>().ActivatePowerup10();
+            
             foreach (Transform child in powerupManager.transform)
             {
                 GameObject.Destroy(child.gameObject);

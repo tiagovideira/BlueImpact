@@ -12,11 +12,17 @@ public class PlayerHealth : MonoBehaviour
 
     private bool powerup2Active = false;
     private bool powerup4Active = false;
+    private bool playerAlive = true;
 
+    private Animator animator;
 
+    private void Awake()
+    {
+        animator = this.GetComponent<Animator>();
+    }
     public void TakeDamage(float DamageAmount)
     {
-        if(powerup4Active)
+        if (powerup4Active)
         {
             DamageAmount = 2 * DamageAmount;
         }
@@ -25,17 +31,29 @@ public class PlayerHealth : MonoBehaviour
             DamageAmount = DamageAmount * 0.9f;
         }
 
-        if (health - DamageAmount <= 0)
+        if (health - DamageAmount <= 0 && playerAlive)
         {
             health = 0;
-            SceneManager.LoadScene(0);
+            animator.SetTrigger("Dead");
             Debug.Log("Jogador Morreu");
+            StartCoroutine("DisablePlayerScripts");
+            playerAlive = false;
         }
-        else
+        else if(playerAlive)
         {
             health -= DamageAmount;
+            animator.SetTrigger("Flinch");
             Debug.Log("Jogador Leva Dano");
         }
+
+    }
+
+    private IEnumerator DisablePlayerScripts()
+    {
+        Destroy(this.GetComponent<PlayerAttack>());
+        Destroy(this.GetComponent<PlayerMovement>());
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(0);
 
     }
 
