@@ -6,6 +6,8 @@ using Cinemachine;
 public class CameraBoundSwitch : MonoBehaviour
 {
     public CinemachineConfiner Confiner;
+    public CinemachineVirtualCamera vcam;
+
 
     public PolygonCollider2D Level0Collider;
     public PolygonCollider2D Level1Collider;
@@ -22,6 +24,7 @@ public class CameraBoundSwitch : MonoBehaviour
 
             case 1:
                 Confiner.m_BoundingShape2D = Level2Collider;
+                vcam.m_Lens.OrthographicSize = 7.25f;
                 break;
 
         }

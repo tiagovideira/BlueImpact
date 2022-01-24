@@ -16,10 +16,12 @@ public class EnemyAttack : MonoBehaviour
     private bool CanAttack;
 
     private GameObject Player;
+    private Animator animator;
 
     private void Start()
     {
         Player = GameObject.Find("Player");
+        animator = this.GetComponent<Animator>();
     }
     private void Update()
     {
@@ -40,19 +42,20 @@ public class EnemyAttack : MonoBehaviour
         while (true)
         {
             Debug.Log("Começou coroutine de ataque");
-            timeBeforeAttack = Random.Range(0.5f, 3);
+            timeBeforeAttack = Random.Range(0.2f, 1);
 
             yield return new WaitForSeconds(timeBeforeAttack);
 
             Attack();
 
-            attackCooldown = Random.Range(0.5f, 2);
+            attackCooldown = Random.Range(0.2f, 2);
             yield return new WaitForSeconds(attackCooldown);
         }
     }
 
     private void Attack()
     {
+        animator.SetTrigger("Attack");
         Player.GetComponent<PlayerHealth>().TakeDamage(damage);
         Debug.Log("Attack");
     }

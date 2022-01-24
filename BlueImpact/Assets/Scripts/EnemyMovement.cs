@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField]
-    private Transform PlayerTransform;
+    private Transform playerTransform;
     private Rigidbody2D rb2d;
 
     private Vector2 direction;
@@ -29,9 +28,14 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     private PlayerDetection playerDetection;
 
+    private Animator animator;
+
+
     void Awake()
     {
+        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         StartCoroutine("FollowPlayer");
+        animator = this.GetComponent<Animator>();
     }
 
     private void Start()
@@ -43,7 +47,7 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         FlipEnemy();
-        if (PlayerTransform.position.y < this.transform.position.y)
+        if (playerTransform.position.y < this.transform.position.y)
         {
             this.GetComponent<SpriteRenderer>().sortingOrder = 74;
         }
@@ -58,10 +62,12 @@ public class EnemyMovement : MonoBehaviour
     {
         if (MustFollowPlayer && playerDetection.PlayerInAttackRange == false)
         {
+            animator.SetBool("IsMoving", true);
             rb2d.velocity = new Vector2(direction.x * moveSpeed, direction.y * moveSpeed);
         }
         else
         {
+            animator.SetBool("IsMoving", false);
             rb2d.velocity = new Vector2(0, 0);
         }
 
@@ -69,7 +75,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void FlipEnemy()
     {
-        if (PlayerTransform.position.x <= this.transform.position.x)
+        if (playerTransform.position.x <= this.transform.position.x)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
             playerToTheLeft = false;
@@ -83,9 +89,9 @@ public class EnemyMovement : MonoBehaviour
 
     private void GetPlayerPosition()
     {
-        direction = (PlayerTransform.position - new Vector3(playerOffsetX, playerOffsetY, 0)) - transform.position;
-        playerX = PlayerTransform.position.x;
-        playerY = PlayerTransform.position.y;
+        direction = (playerTransform.position - new Vector3(playerOffsetX, playerOffsetY, 0)) - transform.position;
+        playerX = playerTransform.position.x;
+        playerY = playerTransform.position.y;
         direction.Normalize();
     }
 

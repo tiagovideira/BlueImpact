@@ -5,8 +5,9 @@ using UnityEngine.InputSystem;
 
 public class Powerup2 : MonoBehaviour
 {
-private PlayerInputActions playerInputActions;
+    private PlayerInputActions playerInputActions;
     private bool playerOnTrigger = false;
+    private Transform playerTransform;
 
     private GameObject powerupManager;
     void Awake()
@@ -15,6 +16,21 @@ private PlayerInputActions playerInputActions;
         playerInputActions.Player.Action.performed += Action;
         playerInputActions.Player.Action.Enable();
         powerupManager = GameObject.Find("PowerupManager");
+        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+
+    }
+
+    private void Update()
+    {
+        if (playerTransform.position.y < this.transform.position.y)
+        {
+            this.GetComponent<SpriteRenderer>().sortingOrder = 74;
+        }
+        else
+        {
+            this.GetComponent<SpriteRenderer>().sortingOrder = 76;
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -32,9 +48,9 @@ private PlayerInputActions playerInputActions;
         if (playerOnTrigger)
         {
             //FALTA remover powerup selecionado da lista de powerups que podem calhar
-            
+
             GameObject.Find("Player").GetComponent<PlayerHealth>().ActivatePowerup2();
-            
+
             foreach (Transform child in powerupManager.transform)
             {
                 GameObject.Destroy(child.gameObject);

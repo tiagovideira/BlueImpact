@@ -77,7 +77,7 @@ public class PlayerAttack : MonoBehaviour
                         }
 
                     }
-                    Enemy.GetComponent<EnemyHealth>().TakeDamage(realPunchDamage);//Normal hit
+                    Enemy.GetComponent<EnemyHealth>().TakeDamage(realPunchDamage, "punch");//Normal hit
 
 
                     if (Energy + energyIncrement > 100)
@@ -106,7 +106,7 @@ public class PlayerAttack : MonoBehaviour
             if (KickRange.EnemyList.Count > 0)
             {
                 soundManager.PlaySound("Kick");
-                
+
                 foreach (GameObject Enemy in KickRange.EnemyList)
                 {
                     realKickDamage = KickDamage;
@@ -118,7 +118,7 @@ public class PlayerAttack : MonoBehaviour
                             realKickDamage = KickDamage * 1.5f;
                         }
                     }
-                    Enemy.GetComponent<EnemyHealth>().TakeDamage(realKickDamage);
+                    Enemy.GetComponent<EnemyHealth>().TakeDamage(realKickDamage, "kick");
 
 
                     if (Energy + energyIncrement > 100)
@@ -137,6 +137,7 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
+
 
     private IEnumerator PunchCooldownStart()
     {
