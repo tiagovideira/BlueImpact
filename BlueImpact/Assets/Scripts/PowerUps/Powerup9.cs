@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class Powerup9 : MonoBehaviour
@@ -10,6 +11,8 @@ public class Powerup9 : MonoBehaviour
     private Transform playerTransform;
 
     private GameObject powerupManager;
+    private GameObject powerupUI;
+    private GameObject powerupDescription;
     void Awake()
     {
         playerInputActions = new PlayerInputActions();
@@ -17,7 +20,8 @@ public class Powerup9 : MonoBehaviour
         playerInputActions.Player.Action.Enable();
         powerupManager = GameObject.Find("PowerupManager");
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-
+        powerupUI = GameObject.Find("Powerup9UI");
+        powerupDescription = GameObject.Find("Powerup9Description");
     }
 
     private void Update()
@@ -36,11 +40,13 @@ public class Powerup9 : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         playerOnTrigger = true;
+        powerupDescription.GetComponent<Image>().enabled = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         playerOnTrigger = false;
+        powerupDescription.GetComponent<Image>().enabled = false;
     }
 
     private void Action(InputAction.CallbackContext context)
@@ -48,6 +54,8 @@ public class Powerup9 : MonoBehaviour
         if (playerOnTrigger)
         {
             //codigo do powerup   remover powerup selecionado da lista de powerups que podem calhar
+            powerupUI.GetComponent<Image>().enabled = true;
+
             foreach (Transform child in powerupManager.transform)
             {
                 GameObject.Destroy(child.gameObject);

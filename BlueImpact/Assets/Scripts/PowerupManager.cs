@@ -28,18 +28,17 @@ public class PowerupManager : MonoBehaviour
 
     private GameObject powerupOne;
     private GameObject powerupTwo;
+    private bool powerupsNotSpawned = true;
 
 
 
-    public void EnemyCountCheck()
+    private void FixedUpdate()
     {
-        enemyCount = enemies.transform.childCount;
-
-        if (enemyCount <= 1)
+        if(enemies.transform.childCount == 0 && powerupsNotSpawned)
         {
             SpawnPowerup();
+            powerupsNotSpawned = false;
         }
-
     }
 
     private void SpawnPowerup()
@@ -48,8 +47,8 @@ public class PowerupManager : MonoBehaviour
         int powerup2;
         do//Aleatorização do powerup (Falta tirar das possibilidades os powerups já apanhados)
         {
-            powerup1 = Random.Range(1, 10);
-            powerup2 = Random.Range(1, 10);
+            powerup1 = Random.Range(1, 11);
+            powerup2 = Random.Range(1, 11);
         }
         while (powerup1 == powerup2);
 

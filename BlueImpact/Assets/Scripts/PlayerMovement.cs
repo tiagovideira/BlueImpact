@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Movement.Enable();
+        playerInputActions.Player.Menu.Enable();
+        playerInputActions.Player.Menu.performed += Menu;
         playerInputActions.Player.Dash.performed += Dash;
         playerInputActions.Player.Dash.Enable();
         animator = this.GetComponent<Animator>();
@@ -50,6 +53,11 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine("ExecuteDash");
         }
+    }
+
+    private void Menu(InputAction.CallbackContext context)
+    {
+        SceneManager.LoadScene(0);
     }
 
     void FixedUpdate()

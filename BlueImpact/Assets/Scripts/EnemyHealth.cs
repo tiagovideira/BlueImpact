@@ -54,7 +54,6 @@ public class EnemyHealth : MonoBehaviour
             DisableScripts();
             animator.SetTrigger("Death");
             Debug.Log("Enemy Dead");
-            powerupManager.EnemyCountCheck();//Checks if can spawn powerup
             yield return new WaitForSeconds(2f);
             Debug.Log("YOU SHOULD BE DESTROYED");
             Destroy(this.gameObject);
@@ -79,7 +78,6 @@ public class EnemyHealth : MonoBehaviour
             DisableScripts();
             animator.SetTrigger("Death");
             Debug.Log("Enemy Dead");
-            powerupManager.EnemyCountCheck();//Checks if can spawn powerup
             yield return new WaitForSeconds(2f);
             Debug.Log("YOU SHOULD BE DESTROYED");
         }

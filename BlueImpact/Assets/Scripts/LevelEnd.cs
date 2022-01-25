@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class LevelEnd : MonoBehaviour
 {
     [SerializeField]
-    private Image endingPanel;
+    private GameObject endingPanel;
     private GameObject player;
     [SerializeField]
     private GameObject NextLevelStartPosition;
@@ -88,15 +88,14 @@ public class LevelEnd : MonoBehaviour
 
     public IEnumerator LoadNextLevel()
     {
-        //endingPanel.color = new Color(endingPanel.color.r, endingPanel.color.g, endingPanel.color.b, endingPanel.color.a + Time.deltaTime);//Fade to black
-        endingPanel.color = new Color(endingPanel.color.r, endingPanel.color.g, endingPanel.color.b, 255);//Tela preta instantaneamente
+        endingPanel.SetActive(true);
         player.GetComponent<PlayerMovement>().enabled = false;
         yield return new WaitForSeconds(2);
         player.transform.position = NextLevelStartPosition.transform.position;
         player.GetComponent<PlayerMovement>().enabled = true;
         CameraBoundSwitchScript.ChangeCameraBound(currentLevel);
         yield return new WaitForSeconds(1);
-        endingPanel.color = new Color(endingPanel.color.r, endingPanel.color.g, endingPanel.color.b, 0);//Fade to normal
+        endingPanel.SetActive(false);
     }
 
 

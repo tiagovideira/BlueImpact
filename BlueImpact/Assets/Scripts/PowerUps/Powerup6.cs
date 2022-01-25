@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class Powerup6 : MonoBehaviour
@@ -12,6 +13,8 @@ public class Powerup6 : MonoBehaviour
     private GameObject powerupManager;
     private GameObject LevelEndTrigger0;
     private GameObject LevelEndTrigger1;
+    private GameObject powerupUI;
+    private GameObject powerupDescription;
 
     void Awake()
     {
@@ -20,7 +23,8 @@ public class Powerup6 : MonoBehaviour
         playerInputActions.Player.Action.Enable();
         powerupManager = GameObject.Find("PowerupManager");
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-
+        powerupUI = GameObject.Find("Powerup6UI");
+        powerupDescription = GameObject.Find("Powerup6Description");
     }
 
     private void Update()
@@ -39,11 +43,13 @@ public class Powerup6 : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         playerOnTrigger = true;
+        powerupDescription.GetComponent<Image>().enabled = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         playerOnTrigger = false;
+        powerupDescription.GetComponent<Image>().enabled = false;
     }
 
     private void Action(InputAction.CallbackContext context)
@@ -57,6 +63,8 @@ public class Powerup6 : MonoBehaviour
 
             LevelEndTrigger0.GetComponent<LevelEnd>().ActivatePowerup6();
             LevelEndTrigger1.GetComponent<LevelEnd>().ActivatePowerup6();
+            powerupUI.GetComponent<Image>().enabled = true;
+
             foreach (Transform child in powerupManager.transform)
             {
                 GameObject.Destroy(child.gameObject);

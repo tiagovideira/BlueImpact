@@ -60,7 +60,21 @@ public class PlayerAttack : MonoBehaviour
         if (canAttack)
         {
             StartCoroutine("PunchCooldownStart");
-            animator.SetTrigger("Punch");
+
+            int punchAnimationNumber = Random.Range(1, 4);
+            switch (punchAnimationNumber)
+            {
+                case 1:
+                    animator.SetTrigger("Punch");
+                    break;
+                case 2:
+                    animator.SetTrigger("Punch2");
+                    break;
+                case 3:
+                    animator.SetTrigger("Punch3");
+                    break;
+            }
+
             if (PunchRange.EnemyList.Count > 0)
             {
                 soundManager.PlaySound("Punch");
