@@ -29,7 +29,7 @@ public class Powerup6 : MonoBehaviour
 
     private void Update()
     {
-        if (playerTransform.position.y < this.transform.position.y)
+        if (playerTransform.position.y < this.transform.position.y)//Muda a layer dos powerups conforme a posição do jogador
         {
             this.GetComponent<SpriteRenderer>().sortingOrder = 74;
         }
@@ -40,24 +40,22 @@ public class Powerup6 : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)//Liga a UI de descrição do powerup
     {
         playerOnTrigger = true;
         powerupDescription.GetComponent<Image>().enabled = true;
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)//Desliga a UI de descrição do powerup
     {
         playerOnTrigger = false;
         powerupDescription.GetComponent<Image>().enabled = false;
     }
 
-    private void Action(InputAction.CallbackContext context)
+    private void Action(InputAction.CallbackContext context)//Ativação do powerup e destruição dos gameobjects relacionados ao mesmo
     {
         if (playerOnTrigger)
         {
-            //codigo do powerup   remover powerup selecionado da lista de powerups que podem calhar
-
             LevelEndTrigger0 = GameObject.Find("LevelEndTrigger0");
             LevelEndTrigger1 = GameObject.Find("LevelEndTrigger1");
 
